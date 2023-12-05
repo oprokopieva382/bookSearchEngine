@@ -16,6 +16,15 @@ type User {
     link:String
   }
 
+  input BookInput {
+    authors: [String]!
+    description: String!
+    title: String!
+    bookId: ID!
+    image: String!
+    link: String!
+  }
+
    type Auth {
     token: ID!
     user : User
