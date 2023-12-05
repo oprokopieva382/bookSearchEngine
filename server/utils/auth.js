@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { GraphQLError } = require("graphql");
 
 // set token secret and expiration date
-const secret = 'mysecretsshhhhh';
-const expiration = '2h';
+const secret = "mysecretsshhhhh";
+const expiration = "2h";
 
 module.exports = {
   AuthenticationError: new GraphQLError("Could not authenticate user.", {
@@ -17,9 +17,11 @@ module.exports = {
     let token = req.query.token || req.headers.authorization;
 
     // ["Bearer", "<tokenvalue>"]
-   if (req.headers.authorization && token.startsWith("Bearer ")) {
-  token = token.slice(7);
-   }
+    if (req.headers.authorization && token.startsWith("Bearer ")) {
+      //!check later
+      token = token.slice(7);
+    }
+
     if (!token) {
       return res.status(400).json({ message: "You have no token!" });
     }
