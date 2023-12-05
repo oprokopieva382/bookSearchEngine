@@ -13,7 +13,7 @@ type User {
     description: String
     title: String
     image: String
-    link:String
+    link: String
   }
 
   input BookInput {
@@ -27,7 +27,7 @@ type User {
 
    type Auth {
     token: ID!
-    user : User
+    user: User
   }
 
    type Query {
@@ -35,10 +35,10 @@ type User {
   }
 
     type Mutation {
-     login(email: String!, password: String!): Auth
+     loginUser(email: String!, password: String!): Auth
 
      addUser(username: String!, email: String!, password: String!): Auth
-     saveBook(book: BookInput!): User //!check later
+     saveBook(book: BookInput!): User 
      removeBook(bookId : ID!): User
   }
 `;

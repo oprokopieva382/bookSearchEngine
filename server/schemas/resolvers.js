@@ -3,21 +3,26 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (_, { userId, username }) => {
-      const query = userId ? { _id: userId } : { username };
-      return User.findOne(query);
+    me: async (_, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v-password"
+        );
+        return userData;
+      }
+      throw AuthenticationError
     },
   },
 
   Mutation: {
-    createUser: async (_, { username, email, password }) => {
+    addUser: async (_, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
 
       return { token, user };
     },
 
-    login: async (_, { email, password }) => {
+    loginUser: async (_, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -47,7 +52,7 @@ const resolvers = {
       );
     },
 
-    deleteBook: async (_, { bookId }, { user }) => {
+    removeBook: async (_, { bookId }, { user }) => {
       return User.findOneAndUpdate(
         { _id: user._id },
         { $pull: { savedBooks: bookId } },
@@ -56,6 +61,5 @@ const resolvers = {
     },
   },
 };
-
 
 module.exports = resolvers;
