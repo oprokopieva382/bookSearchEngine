@@ -3,7 +3,7 @@ import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { SAVE_BOOK } from "../utils/mutations";
 import Auth from "../utils/auth";
-import {  searchGoogleBooks } from "../utils/API";
+import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 
 const SearchBooks = () => {
@@ -53,7 +53,7 @@ const SearchBooks = () => {
     }
   };
 
-  const [saveBookMutation] = useMutation(SAVE_BOOK);
+  const [saveBook] = useMutation(SAVE_BOOK);
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
@@ -68,12 +68,13 @@ const SearchBooks = () => {
     }
 
     try {
-      const { data } = await saveBookMutation({
-        variables: { book: { ...bookToSave } },
+      console.log("Yo")
+      const { data } = await saveBook({
+        variables: { book: bookToSave },
       });
-
-      if (data.saveBook) {
-        console.log(data.saveBook);
+      console.log(data);
+      if (data && data.saveBook) {
+        console.log(data);
         const updatedUser = data.saveBook;
         setSavedBookIds(updatedUser.savedBooks.map((book) => book.bookId));
         //setSavedBookIds([...savedBookIds, bookToSave.bookId]);

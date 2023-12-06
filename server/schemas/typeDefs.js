@@ -17,11 +17,11 @@ type User {
   }
 
   input BookInput {
-    authors: [String]!
-    description: String!
-    title: String!
-    bookId: ID!
-    image: String!
+    bookId: ID
+    authors: [String]
+    description: String
+    title: String
+    image: String
     link: String
   }
 
