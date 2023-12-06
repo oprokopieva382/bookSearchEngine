@@ -44,9 +44,9 @@ export const LOGIN_USER = gql`
 `;
 
 export const REMOVE_BOOK = gql`
-  mutation removeBook() {
-    removeBook () {
-     _id
+  mutation removeBook($bookId: ID!) {
+    removeBook(bookId: $bookId) {
+      _id
       username
       email
       bookCount
