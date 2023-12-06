@@ -1,8 +1,8 @@
 const typeDefs = `
 type User {
     _id: ID
-    username: String!
-    email: String!
+    username: String
+    email: String
     bookCount: Float
     savedBooks: [Book]
   }
@@ -22,7 +22,7 @@ type User {
     title: String!
     bookId: ID!
     image: String!
-    link: String!
+    link: String
   }
 
    type Auth {
