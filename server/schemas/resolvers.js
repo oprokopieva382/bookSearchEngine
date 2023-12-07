@@ -10,7 +10,7 @@ const resolvers = {
         );
         return userData;
       }
-      throw AuthenticationError
+      throw AuthenticationError;
     },
   },
 
@@ -22,7 +22,7 @@ const resolvers = {
       return { token, user };
     },
 
-    loginUser: async (_, { email, password }) => {
+    login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -39,25 +39,37 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (_, { book }, { user }) => {
-      return User.findOneAndUpdate(
-        { _id: user._id },
-        {
-          $addToSet: { savedBooks: book },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+    saveBook: async (_, { book }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { savedBooks: book },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        return updatedUser;
+      }
+
+      throw AuthenticationError;
     },
 
-    removeBook: async (_, { bookId }, { user }) => {
-      return User.findOneAndUpdate(
-        { _id: user._id },
-        { $pull: { savedBooks: bookId } },
-        { new: true }
-      );
+    removeBook: async (_, { bookId }, context) => {
+            if (context.user) {
+             const updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id },
+               { $pull: { savedBooks: { bookId } } },
+               { new: true }
+             );
+
+              return updatedUser;
+            }
+
+            throw AuthenticationError;
     },
   },
 };
