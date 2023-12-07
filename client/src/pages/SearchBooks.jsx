@@ -68,17 +68,15 @@ const SearchBooks = () => {
     }
 
     try {
-      console.log("Yo")
       const { data } = await saveBook({
-        variables: { book: bookToSave },
+        variables: { book: { ...bookToSave } },
       });
-      console.log(data);
-      if (data && data.saveBook) {
-        console.log(data);
-        const updatedUser = data.saveBook;
-        setSavedBookIds(updatedUser.savedBooks.map((book) => book.bookId));
-        //setSavedBookIds([...savedBookIds, bookToSave.bookId]);
-      }
+   
+    console.log(data);
+   
+      
+        setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+     
     } catch (err) {
       console.error(err);
     }
