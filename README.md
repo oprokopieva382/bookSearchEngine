@@ -28,5 +28,4 @@ Please refer to the LICENSE in the repo.
 ## Questions
 If you have any questions find me on [GitHub](https://github.com/oprokopieva382) or feel free email me oprokopieva382@gmail.com
 
-## Links
-Check this out [Render](https://)
+
